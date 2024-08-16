@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Purchase History</h1>
+
+
+    <div class="row">
+        <div class="col-md-12" id="car-listings">
+            <h4 id="result-count" class="text-center mt-4">{{ history| length }} Results Found</h4>
+            <hr/>
+            
+            <div class="row">
+                {% for item in history %}
+                <div class="col-md-3 mb-3 car-item" data-brand="{{ item.car.name}}">
+                    <div class="card">
+                        <img src="{{ item.car.image.url }}" class="card-img-top" alt="{{ car.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title"> Car : {{ item.car.name }}</h5>
+                            <small class="card-text">{{ item.car.description|truncatewords:10 }}</small>
+                            <p class="card-text">Price : {{ item.car.price }}$</p>
+                            <p class="card-text">Brand: {{ item.car.brand.name }}</p>
+                            <p class="card-text"> Purchased on {{ item.purchase_date }}</p>
+                      
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endblock content %}

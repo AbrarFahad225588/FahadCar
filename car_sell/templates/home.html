@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="d-flex flex-wrap px-2 pt-2 align-items-center">
+    <div class="col-md-8">
+        <h1>Welcome to Fahad Luxury Car Online Shop</h1>
+        <p>For Sale: 2024 [Luxury Car Make & Model]
+
+            Price: $[Price]
+            
+            Experience the pinnacle of automotive excellence with this stunning 2024 [Luxury Car Make & Model]. Engineered for those who demand sophistication and performance, this vehicle combines cutting-edge technology with timeless elegance.
+            
+            Key Features:
+            
+            Engine: [Engine Type, e.g., 4.0L V8 Twin-Turbo] delivering [Horsepower] horsepower for exhilarating performance.
+            Transmission: [Transmission Type, e.g., 8-speed automatic] with seamless gear shifts for a smooth driving experience.
+            Exterior Color: [Color], a sleek and timeless hue that exudes class and style.
+            Interior: [Interior Color & Material, e.g., hand-stitched leather seats] with [features, e.g., advanced climate control] for unparalleled comfort.
+            Infotainment System: [System Details, e.g., 12-inch touchscreen display, premium sound system, navigation] to keep you connected and entertained.
+            Safety Features: [List of Features, e.g., adaptive cruise control, lane-keeping assist, 360-degree camera] ensuring peace of mind on every journey.
+            Mileage: [Current Mileage] miles, meticulously maintained and serviced with [Service Details, e.g., full service history available]..</p>
+    </div>
+    <div class="col-md-4" >
+        <img src="{% static 'images/home2.jpg' %}" alt="Welcome Image" class="img-fluid">
+    </div>
+</div>
+
+
+<h2 class="mt-5">Car Brand</h2>
+
+<div class="col-md-12">
+    <div class=" bg-white d-flex gap-3 " role="group" aria-label="Car Brands">
+        <button type="button" class="btn btn-white " onclick="filterCars('all')">All</button>
+        {% for brand in brands %}
+        <button type="button" class="btn btn-white " onclick="filterCars('{{ brand.name }}')">{{ brand.name }}</button>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+
+<div class="row">
+    <div class="col-md-12" id="car-listings">
+        <h4 id="result-count" class="text-center mt-4">{{ cars |length }} Results Found</h4>
+        <hr/>
+        
+        <div class="row">
+            {% for car in cars %}
+            <div class="col-md-3 mb-3 car-item" data-brand="{{ car.brand.name }}">
+                <div class="card">
+                    <img src="{{ car.image.url }}" class="card-img-top" alt="{{ car.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title"> Car : {{ car.name }}</h5>
+                        <small class="card-text">{{ car.description|truncatewords:10 }}</small>
+                        <p class="card-text">Price : {{ car.price }}$</p>
+                        <p class="card-text">Quantity : {{ car.quantity }}</p>
+                        <p class="card-text">Brand: {{ car.brand.name }}</p>
+                  
+                        <a href="{% url 'car_details' car.pk %}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    
+    document.getElementById('result-count').textContent = '{{ cars|length }} Results Found';
+
+    function filterCars(brand) {
+        let carItems = document.querySelectorAll('.car-item');
+
+        carItems.forEach(item => {
+            if (brand === 'all' || item.dataset.brand === brand) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        let visibleCars = document.querySelectorAll('.car-item[style="display: block;"]');
+        document.getElementById('result-count').textContent = visibleCars.length + ' Results Found';
+    }
+</script>
+
+{% endblock content %}

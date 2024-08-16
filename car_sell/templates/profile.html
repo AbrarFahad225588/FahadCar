@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}
+  Profile Page
+{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+  <div class="m-5" >
+    <h1>Profile Page</h1>
+    <a class="btn btn-info"  href="{% url 'edit_profile' %}">Edit Profile</a>
+    <a class="btn btn-warning" href="{% url 'change_password' %}">Change password</a>
+    <a href="{% url 'purchase_history' %}" class="btn btn-primary">purchase_history</a>
+  </div>
+<h1>Detailes Your Account</h1>
+
+<p><strong>First Name:</strong> {{ first_name }}</p>
+<p><strong>Last Name:</strong> {{ last_name }}</p>
+<p><strong>Username:</strong> {{ username }}</p>
+<p><strong>Email:</strong> {{ email }}</p>
+
+
+{% endblock %}
